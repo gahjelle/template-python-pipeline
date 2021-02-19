@@ -5,6 +5,11 @@
     "project_short_description": "Doing {{ cookiecutter.project_name }}.",
     "repo_name": "{{ cookiecutter.project_name|lower|replace(' ', '_') }}",
     "exe_name": "{{ cookiecutter.repo_name }}",
+    "conda_environment": "{{ cookiecutter.repo_name }}",
     "default_pipeline": "stuff",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "set_up": [
+        "Set up environment and dependencies",
+        "Only create files"
+    ]
 }

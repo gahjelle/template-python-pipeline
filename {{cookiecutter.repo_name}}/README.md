@@ -13,7 +13,7 @@ To install {{ cookiecutter.project_name }} locally is therefore a three-step pro
 
 1. Create a new Conda environment with the necessary packages:
 
-        $ conda env create -n {{ cookiecutter.repo_name }} -f environment.yml
+        $ conda env create -n {{ cookiecutter.conda_environment }} -f environment.yml
         $ conda activate {{ cookiecutter.repo_name }}
 
 2. Install dependencies with Pip:
