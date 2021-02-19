@@ -21,10 +21,9 @@ import typer
 
 # {{ cookiecutter.project_name }} imports
 import {{ cookiecutter.repo_name }}
-from {{ cookiecutter.repo_name }} import config
+from {{ cookiecutter.repo_name }} import config, pipelines
 from {{ cookiecutter.repo_name }}.utils import log
 from {{ cookiecutter.repo_name }}.utils.log import logger
-from {{ cookiecutter.repo_name }} import pipelines
 
 # The command line app
 app = typer.Typer()
@@ -40,8 +39,8 @@ def run_model(
     pipeline: str = typer.Argument("{{ cookiecutter.default_pipeline }}"),
     log_level: str = typer.Option(
         config.{{ cookiecutter.repo_name }}.log.console.level,
-        help = "Level for log messages",
-        show_default=True
+        help="Level for log messages",
+        show_default=True,
     ),
     show_log_levels: bool = typer.Option(
         False, "--show-log-levels", help="Show all possible log levels"

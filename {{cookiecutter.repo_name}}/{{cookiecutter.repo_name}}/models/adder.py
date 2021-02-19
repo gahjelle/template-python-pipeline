@@ -7,7 +7,7 @@ point to the plug-in.
 # Third party imports
 import pyplugs
 
-# {{ cookiecutter.repo_name }} imports
+# {{ cookiecutter.project_name }} imports
 from {{ cookiecutter.repo_name }} import config
 
 # Configuration of plug-in

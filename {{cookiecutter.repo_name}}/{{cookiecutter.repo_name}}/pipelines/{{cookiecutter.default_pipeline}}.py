@@ -6,9 +6,8 @@ import math
 # Third party imports
 import pyplugs
 
-# {{ cookiecutter.repo_name }} imports
-from {{ cookiecutter.repo_name }} import config
-from {{ cookiecutter.repo_name }} import models
+# {{ cookiecutter.project_name }} imports
+from {{ cookiecutter.repo_name }} import config, models
 
 # Configuration of pipeline
 CFG = config.get(__name__)
@@ -19,7 +18,12 @@ def read(data, meta):
     """Add information to data"""
     data.name = "{{ cookiecutter.project_name }}"
     data.path = __file__
-    data.model_data = {"name": CFG.model_name, "pi": math.pi, "value": 28.1, "num_rooms": 4}
+    data.model_data = {
+        "name": CFG.model_name,
+        "pi": math.pi,
+        "value": 28.1,
+        "num_rooms": 4,
+    }
 
 
 @pyplugs.register

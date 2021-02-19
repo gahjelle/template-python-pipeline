@@ -14,7 +14,6 @@ from codetiming import Timer
 from {{ cookiecutter.repo_name }} import config
 from {{ cookiecutter.repo_name }}.utils.log import logger
 
-
 # Set up plug-in functions
 call = pyplugs.call_factory(__package__)
 funcs = pyplugs.funcs_factory(__package__)
@@ -38,7 +37,11 @@ def run(pipeline: str, *stages) -> None:
     data, meta = munch.Munch(), munch.Munch()
     for stage in stages:
         logger.opt(colors=True).info(f"Start stage <cyan>{stage!r}</cyan>")
-        {% raw %}with Timer(f"stage_{stage}", f"Finished {stage!r} in {{:.2f}} seconds", logger=logger.time):{% endraw %}
+        {% raw %}with Timer(
+            f"stage_{stage}",
+            f"Finished {stage!r} in {{:.2f}} seconds",
+            logger=logger.time,
+        ):{% endraw %}
             call(pipeline, func=stage, data=data, meta=meta)
 
     return data, meta

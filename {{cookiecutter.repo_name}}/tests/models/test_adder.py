@@ -1,8 +1,11 @@
 """Test adder model"""
 
+# Third party imports
 import pytest
 
+# {{ cookiecutter.project_name }} imports
 from {{ cookiecutter.repo_name }}.models import adder
+
 
 @pytest.fixture
 def dummy_data():

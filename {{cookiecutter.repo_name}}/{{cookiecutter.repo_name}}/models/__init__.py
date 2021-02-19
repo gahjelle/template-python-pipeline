@@ -10,5 +10,4 @@ Plug-ins can be called in the code using something like
 # Third party imports
 import pyplugs
 
-
 run = pyplugs.call_factory(__package__)

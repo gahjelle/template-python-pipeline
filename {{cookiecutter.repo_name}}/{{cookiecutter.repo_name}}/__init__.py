@@ -1,9 +1,9 @@
 """{{ cookiecutter.project_name }} - {{ cookiecutter.project_short_description }}"""
 
 # Standard library imports
+import re as _re
 from collections import namedtuple as _namedtuple
 from datetime import date as _date
-import re as _re
 
 # Version of {{ cookiecutter.project_name }}
 __version__ = "{{ cookiecutter.version }}"  # This is automatically set using the bumpversion tool
