@@ -10,4 +10,5 @@ loguru
 munch
 pyconfs[toml]
 pyplugs
+python-dotenv
 typer
