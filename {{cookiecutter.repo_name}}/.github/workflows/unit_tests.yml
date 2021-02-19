@@ -1,0 +1,24 @@
+name: unit_tests
+on: [push]
+
+jobs:
+  tests:
+    name: {% raw %}${{ matrix.name }}{% endraw %}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: Linux, python: "3.9", os: ubuntu-latest, tox: py }
+          - { name: Windows, python: "3.9", os: windows-latest, tox: py }
+          - { name: Style, python: "3.9", os: ubuntu-latest, tox: style }
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: {% raw %}${{ matrix.python }}{% endraw %}
+      - run: pip install tox
+      - name: Run tox tests
+        working-directory: ./{{ cookiecutter.repo_name }}
+        run: |
+          tox -e {% raw %}${{ matrix.tox }}{% endraw %}
