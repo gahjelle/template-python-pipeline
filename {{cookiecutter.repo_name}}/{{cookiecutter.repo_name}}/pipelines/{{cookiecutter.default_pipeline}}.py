@@ -1,7 +1,17 @@
 """Example of how to use a plugin"""
 
+# Standard library imports
+import math
+
 # Third party imports
 import pyplugs
+
+# {{ cookiecutter.repo_name }} imports
+from {{ cookiecutter.repo_name }} import config
+from {{ cookiecutter.repo_name }} import models
+
+# Configuration of pipeline
+CFG = config.get(__name__)
 
 
 @pyplugs.register
@@ -9,6 +19,13 @@ def read(data, meta):
     """Add information to data"""
     data.name = "{{ cookiecutter.project_name }}"
     data.path = __file__
+    data.model_data = {"name": CFG.model_name, "pi": math.pi, "value": 28.1, "num_rooms": 4}
+
+
+@pyplugs.register
+def run_model(data, meta):
+    """Run a model on the data"""
+    models.run(CFG.model_name, data=data.model_data, number=42)
 
 
 @pyplugs.register

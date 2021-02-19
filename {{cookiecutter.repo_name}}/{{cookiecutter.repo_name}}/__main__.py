@@ -15,7 +15,6 @@ Version: {version}
 
 # Standard library imports
 from datetime import datetime
-import sys
 
 # Third party imports
 import typer

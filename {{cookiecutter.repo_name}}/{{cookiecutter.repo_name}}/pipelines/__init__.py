@@ -11,7 +11,6 @@ import pyplugs
 from codetiming import Timer
 
 # {{ cookiecutter.project_name }} imports
-import {{ cookiecutter.repo_name }}.__main__
 from {{ cookiecutter.repo_name }} import config
 from {{ cookiecutter.repo_name }}.utils.log import logger
 

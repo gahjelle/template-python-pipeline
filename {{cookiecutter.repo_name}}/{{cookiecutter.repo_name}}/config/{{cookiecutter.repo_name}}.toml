@@ -35,7 +35,15 @@ user                       = "{path_home}/{{ cookiecutter.repo_name }}/"
         icon                       = "⏱"
 
 #
+# Models
+#
+[models.adder]
+ignore_keys        = ["name", "pi"]
+
+
+#
 # Pipelines
 #
 [pipelines.{{ cookiecutter.default_pipeline }}]
 stages             = []
+model_name         = "adder"
