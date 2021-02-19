@@ -23,7 +23,7 @@ funcs = pyplugs.funcs_factory(__package__)
 
 @logger.catch(reraise=True)  # Log exceptions with more details
 @Timer("pipeline", "Finished pipeline in {:.2f} seconds", logger=logger.time)
-def run(pipeline: str) -> None:
+def run(pipeline: str, *stages) -> None:
     """Run one pipeline
 
     Args:
@@ -31,7 +31,7 @@ def run(pipeline: str) -> None:
     """
 
     # Run pipeline
-    stages = config.{{ cookiecutter.repo_name }}.pipelines[pipeline].stages or funcs(pipeline)
+    stages = stages or config.{{ cookiecutter.repo_name }}.pipelines[pipeline].stages or funcs(pipeline)
     logger.opt(colors=True).info(
         f"Start pipeline <red>{pipeline!r}</red> with stages: {', '.join(stages)}"
     )
@@ -41,3 +41,5 @@ def run(pipeline: str) -> None:
         logger.opt(colors=True).info(f"Start stage <cyan>{stage!r}</cyan>")
         {% raw %}with Timer(f"stage_{stage}", f"Finished {stage!r} in {{:.2f}} seconds", logger=logger.time):{% endraw %}
             call(pipeline, func=stage, data=data, meta=meta)
+
+    return data, meta

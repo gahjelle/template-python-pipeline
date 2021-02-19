@@ -1,18 +1,17 @@
-"""Handle configuration settings in {{ cookiecutter.project_name }}
+"""Handle configuration settings in {{ cookiecutter.project_name }}"""
 
-"""
 # Standard library imports
 import pathlib
-from importlib import resources
 
 # Third party imports
+import dotenv
 from pyconfs import Configuration
+
+# Read environment variables from an optional .env file
+dotenv.load_dotenv()
 
 # Base directory for the {{ cookiecutter.repo_name }} package
 _BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
-
-# Marker representing {{ cookiecutter.repo_name }}/config
-_PACKAGE_CONFIG_DIR = object()
 
 # Prioritized list of possible locations for all {{ cookiecutter.project_name }} config files
 _CONFIG_DIRECTORIES = (
@@ -20,6 +19,9 @@ _CONFIG_DIRECTORIES = (
     pathlib.Path.home() / ".{{ cookiecutter.repo_name }}",
     _BASE_DIR / "config",
 )
+
+# Pointers to existing configurations
+_CFGS = {}
 
 
 def read_config(cfg_name: str) -> Configuration:
@@ -31,11 +33,12 @@ def read_config(cfg_name: str) -> Configuration:
     Returns:
         A configuration object
     """
-    cfg = Configuration(cfg_name)
-    for file_path in config_paths(cfg_name):
-        cfg.update_from_file(file_path)
+    if cfg_name not in _CFGS:
+        cfg = _CFGS[cfg_name] = Configuration(cfg_name)
+        for file_path in config_paths(cfg_name):
+            cfg.update_from_file(file_path)
 
-    return cfg
+    return _CFGS[cfg_name]
 
 
 def config_paths(cfg_name: str) -> pathlib.Path:
@@ -50,11 +53,26 @@ def config_paths(cfg_name: str) -> pathlib.Path:
                 break
 
 
-# Read configurations from file
+def get(module_name: str):
+    """Get the configuration for the given module"""
+    cfg, *sections = module_name.split(".")
+    return _CFGS.get(cfg, Configuration()).get(sections, Configuration())
+
+
+# Read configuration from file, update paths and from environment variables
 {{ cookiecutter.repo_name }} = read_config("{{ cookiecutter.repo_name }}")
 {{ cookiecutter.repo_name }}.vars.update(
     {
         "path_home": str(pathlib.Path.home()),
         "path_{{ cookiecutter.repo_name }}": str(_BASE_DIR),
+        **{f"path_{k}": v for k, v in {{ cookiecutter.repo_name }}.paths.entries},
     }
+)
+{{ cookiecutter.repo_name }}.update_from_env(
+    {
+        "LOG_LEVEL": ("log", "console", "level"),
+        "JSON_LOGS": ("log", "console", "json_logs"),
+    },
+    converters={"JSON_LOGS": "bool"},
+    prefix="{{ cookiecutter.repo_name|upper }}",
 )

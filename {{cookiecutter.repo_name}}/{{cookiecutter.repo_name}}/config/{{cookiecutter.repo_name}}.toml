@@ -1,11 +1,38 @@
+# Configuration of {{ cookiecutter.project_name }}
+
 [paths]
 user                       = "{path_home}/{{ cookiecutter.repo_name }}/"
 
+#
+# Logging
+#
+[log]
 
-[log.console]
-level                      = "INFO"
-format                     = "<green>{time}</green> <level>{level:<8} {message}</level>"
+    [log.console]
+    level                      = "INFO"
+    format                     = "<green>{time}</green> <level>{level:<8} {message}</level>"
+    include_3rd_party          = true
+    json_logs                  = false
 
+    [log.custom_levels]
+
+        [log.custom_levels.store]
+        name                       = "STORE"
+        no                         = 8
+        color                      = "<light-magenta>"
+        icon                       = "•"
+
+        [log.custom_levels.dev]
+        name                       = "DEV"
+        no                         = 15
+        color                      = "<blue>"
+        icon                       = "☣"
+
+        [log.custom_levels.time]
+        name                       = "TIME"
+        no                         = 23
+        color                      = "<yellow>"
+        icon                       = "⏱"
 
 #
 # Pipelines

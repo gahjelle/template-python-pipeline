@@ -27,6 +27,10 @@ from {{ cookiecutter.repo_name }}.utils import log
 from {{ cookiecutter.repo_name }}.utils.log import logger
 from {{ cookiecutter.repo_name }} import pipelines
 
+# The command line app
+app = typer.Typer()
+
+
 def main():
     """Dispatch to typer"""
     run_model.__doc__ = {{ cookiecutter.repo_name }}._update_doc(__doc__)
